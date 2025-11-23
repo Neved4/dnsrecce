@@ -1,0 +1,93 @@
+.Dd November 2024
+.Dt DNSRECCE 1
+.Os
+.Sh NAME
+.Nm dnsrecce
+.Nd cozy DNS reconnaissance CLI
+.Sh SYNOPSIS
+.Nm dnsrecce
+.Op Fl e
+.Op Fl S Ar server
+.Op Fl s Ar count
+.Op Fl p Ar count
+.Op Fl f Ar path
+.Op Fl u Ar mode
+.Op Fl r
+.Op Fl w
+.Op Fl x Ar regex
+.Op Fl o Ar file
+.Op Fl b Ar file
+.Op Fl T Ar count
+.Op Fl t Ar seconds
+.Op Fl D Ar domain
+.Ar domain
+.Sh DESCRIPTION
+.Nm
+performs threaded A/NS/MX lookups, zone transfers, Google scraping,
+brute-force with recursion, whois netrange expansion, reverse PTRs, and
+writes optional MagicTree-friendly XML. Output is formatted for
+readability with optional ANSI colors. Single-dash long flags are
+accepted (e.g., Fl domain , Fl scrap Ns = Ns 5 ) .
+.Sh OPTIONS
+.Bl -tag -width Ds
+.It Fl e , Fl enum
+Shortcut sweep: threads 5, scrap 15, whois on.
+.It Fl S , Fl server , Fl dnsserver Ar server
+Pin resolvers for A/NS/MX queries.
+.It Fl s , Fl scrap Ar count
+Google scraping budget (default 0).
+.It Fl p , Fl pages Ar count
+Google pages to scrape (default 5).
+.It Fl f , Fl file Ar path
+Brute-force wordlist (default: /usr/share/dnsenum/dns.txt or local
+.Pa dns.txt ) .
+.It Fl u , Fl update Ar mode
+Write discoveries back to wordlist (a/all, g, r, z).
+.It Fl r , Fl recursive , Fl recursion
+Recurse on NS-capable subdomains.
+.It Fl w , Fl whois
+Whois netrange expansion.
+.It Fl x , Fl exclude Ar regex
+Regex to drop PTR matches.
+.It Fl o , Fl output Ar file
+MagicTree-friendly XML output.
+.It Fl b , Fl subfile Ar file
+Write discovered subdomains to file.
+.It Fl T , Fl threads Ar count
+Concurrency level.
+.It Fl t , Fl timeout Ar seconds
+DNS timeout (default 10, max 128).
+.It Fl D , Fl domain Ar domain
+Explicit domain flag; positional argument also accepted.
+.It Fl R , Fl noreverse
+Skip reverse PTR lookups.
+.It Fl C , Fl nocolor
+Disable color output.
+.It Fl P , Fl private
+Show and save private IPs.
+.It Fl h , Fl help
+Show help.
+.It Fl v , Fl verbose
+Verbose progress.
+.It Fl d , Fl delay Ar seconds
+Max random delay between whois queries (default 3).
+.El
+.Sh FILES
+.Bl -tag -width Ds
+.It Pa dns.txt
+Default brute-force wordlist (searches /usr/share/dnsenum/dns.txt then
+local).
+.It Pa <domain>_ips.txt
+IP blocks and optional private IPs.
+.El
+.Sh EXAMPLES
+Fast sweep without reverse lookup:
+.Pp
+.Dl "dnsrecce --threads 5 --scrap 0 --noreverse example.com"
+.Pp
+Full run with whois and recursion, saving subs:
+.Pp
+.Dl "dnsrecce --enum --recursive --subfile subs.txt --file dns.txt example.com"
+.Sh SEE ALSO
+.Xr dig 1 ,
+.Xr whois 1
