@@ -51,14 +51,14 @@ Default brute-force list lives at `data/dns.txt`.
 
 ## Usage
 
-Run with the flags you need; everything is optional except the domain:
+Run with the options you need; everything is optional except the domain:
 
 ```sh
 usage: dnsrecce [-e] [-S <srv>] [-s <n>] [-p <n>] [-f <path>] [-u <mode>]
 	[-r] [-w] [-x <regex>] [-o <xml>] [-b <file>] [-T <n>]
 	[-t <s>] [-D <domain>] <domain>
 
-Flags:
+Options:
   -e, -enum       Shortcut sweep (threads=5, scrap=15, whois on)
   -S, -server     Pin resolvers
   -s, -scrap      Google scraping budget
